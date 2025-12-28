@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignments</title>
+    <meta name="description" content="Assignments">
+    <meta name="author" content="Niall Fitzgerald">
+
+    <!-- Fade-in effect JS hook -->
+    <script>
+        // If JavaScript works, swap "no-js" for "js"
+        document.documentElement.className =
+            document.documentElement.className.replace(/\bno-js\b/, "js");
+    </script>
+
+    <style>
+        /* Smooth scrolling (W3Schools method) */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Fade-in effect */
+        html.js body {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        html.js.fade-in body {
+            opacity: 1;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #111;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 16px 140px;
+            /* extra space so sticky button doesn’t cover content */
+            text-align: center;
+        }
+
+        /* Bookmark menu */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            border-bottom: 1px solid #e6e6e6;
+            padding: 12px 10px;
+            z-index: 5;
+            text-align: center;
+            /* centre the menu */
+        }
+
+        .nav a {
+            margin: 0 8px;
+            color: #111;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        /* Section layout */
+        .section {
+            scroll-margin-top: 60px; /* compensates for menu obscuring scrolled-to sectionl*/
+            height: 220px;
+            padding: 20px;
+            box-sizing: border-box;
+
+            /* centre content vertically within sections */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section:nth-child(even) {
+            background: #f4f4f4;
+        }
+
+        /* Responsive text using vw  */
+        h1 {
+            font-size: 8vw;
+            margin: 0;
+        }
+
+        p.lead {
+            font-size: 2vw;
+            margin: 0;
+        }
+
+        /* Keep text readable on varying screen sizes */
+        @media (min-width: 1000px) {
+            h1 {
+                font-size: 80px;
+            }
+
+            p.lead {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            h1 {
+                font-size: 38px;
+            }
+
+            p.lead {
+                font-size: 14px;
+            }
+        }
+
+        /* Keyframes animation  */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-badge {
+            display: inline-block;
+            padding: 10px 14px;
+            border: 1px solid #111;
+            font-size: 14px;
+            animation: fadeSlideIn 1.2s ease forwards;
+        }
+
+        /* Zoom in/out image using CSS */
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .image-wrapper {
+            width: 120px;
+         
+        }
+
+        .zoom-image {
+            width: 100%;
+            display: block;
+            animation: zoomInOut 10s infinite;
+        }
+
+        /* Basic form styling */
+        .contact-box {
+            border: 2px solid #111;
+            padding: 14px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .contact-box input[type="tel"] {
+            border: 1px solid #111;
+            padding: 6px;
+            width: 200px;
+            box-sizing: border-box;
+            margin-left: 6px;
+        }
+
+        .contact-box input[type="submit"] {
+            border: 1px solid #111;
+            padding: 6px 12px;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        /* Automatic slideshow */
+        .slideshow {
+            width: 100%;
+            max-width: 150px;
+            border: 1px solid #e6e6e6;
+            background: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .slide {
+            width: 100%;
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        /* Overlay for popup */
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            z-index: 9998;
+        }
+
+        #overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Popup form  */
+        .form-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid #111;
+            background: #fff;
+            z-index: 9999;
+            width: 320px;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            padding: 16px;
+            text-align: left;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 12px;
+            border: 1px solid #111;
+            box-sizing: border-box;
+        }
+
+        .form-container .btn {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #111;
+            cursor: pointer;
+            background: #f2f2f2;
+            margin-bottom: 8px;
+        }
+
+        .form-container .cancel {
+            background: #fff;
+        }
+
+        /* Sticky contact button */
+        .sticky-contact {
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            border: none;
+            background: #111;
+            color: #fff;
+            padding: 14px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 9997;
+        }
+
+        .sticky-contact:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Bookmark navigation -->
+    <div class="nav">
+        <a href="#fade">Fade-in</a>
+        <a href="#responsive">Responsive Text</a>
+        <a href="#form">Form</a>
+        <a href="#popup">Popup</a>
+        <a href="#animate">Animation</a>
+        <a href="#zoom">Zoom</a>
+        <a href="#slideshow">Slideshow</a>
+    </div>
+
+        <!-- Fade in Message -->
+        <div class="section" id="fade">
+            <h2 style="margin:0;">Fade-in Effect</h2>
+            <p style="margin:0; max-width: 650px;">
+                The page fades in using a CSS transition, and JavaScript adds a class after the page loads.
+            </p>
+        </div>
+
+        <!-- Responsive Text -->
+    <div class="container">
+        <div class="section" id="responsive">
+            <h1>Hello World</h1>
+            <p class="lead">Resize the browser window to see how the font size scales.</p>
+        </div>
+        
+
+        <div class="section" id="form">
+            <h2 style="margin:0;">Form with Validation</h2>
+
+            <!-- Form with phone field -->
+            <form name="contactForm" onsubmit="return validateMainForm();">
+                <div class="contact-box">
+                    <label>
+                        Phone Number:
+                        <input type="tel" name="phone" placeholder="e.g. 0871234567">
+                    </label>
+                    <br><br>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+
+            <p style="margin:0; font-size: 14px;">Submit empty to see the alert.</p>
+        </div>
+
+        <div class="section" id="popup">
+            <h2 style="margin:0;">Popup Contact Form</h2>
+            <p style="margin:0; max-width: 650px;">
+                Click the sticky Contact button in the bottom-right corner to open the popup.
+            </p>
+        </div>
+
+        <div class="section" id="animate">
+            <h2 style="margin:0;">@Keyframes Animation</h2>
+            <span class="animated-badge">Reload page to see the anim</span>
+        </div>
+
+        <div class="section" id="zoom">
+            <h2 style="margin:0;">Zoom In/Out Image</h2>
+            <div class="image-wrapper">
+                <img src="images/html-5-logo.svg" class="zoom-image" alt="HTML5 Logo">
+            </div>
+        </div>
+
+        <div class="section" id="slideshow">
+            <h2 style="margin:0;">Automatic Slideshow</h2>
+
+            <!-- Slideshow images -->
+            <div class="slideshow">
+                <img class="slide active" src="images/html-5-logo.svg" alt="Slide 1">
+                <img class="slide" src="images/css-logo.png" alt="Slide 2">
+                <img class="slide" src="images/js-logo.jpg" alt="Slide 3">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Overlay for popup -->
+    <div id="overlay" onclick="closeForm()"></div>
+
+    <!-- Popup form -->
+    <div class="form-popup" id="myForm">
+        <form name="popupContactForm" class="form-container" onsubmit="return validatePopupForm();">
+            <h2 style="margin:0 0 10px;">Contact</h2>
+
+            <label><b>Name</b></label>
+            <input type="text" placeholder="Enter Name" name="name">
+
+            <label><b>Phone</b></label>
+            <input type="tel" placeholder="Enter Phone" name="phone">
+
+            <button type="submit" class="btn">Send</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
+    <!-- Sticky contact button -->
+    <button class="sticky-contact" onclick="openForm()">Contact</button>
+
+    <script>
+        // Fade in after page load
+        window.onload = function () {
+            document.documentElement.className += " fade-in";
+        };
+
+        // Main form validation
+        function validateMainForm() {
+            var phone = document.forms["contactForm"]["phone"].value;
+            if (phone == "") {
+                alert("Phone number must be filled out");
+                return false;
+            }
+            alert("Main form submitted!");
+            return false;
+        }
+
+        // Popup open/close
+        function openForm() {
+            document.getElementById("overlay").classList.add("show");
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+            document.getElementById("overlay").classList.remove("show");
+        }
+
+        // Popup validation
+        function validatePopupForm() {
+            var name = document.forms["popupContactForm"]["name"].value;
+            var phone = document.forms["popupContactForm"]["phone"].value;
+
+            if (name == "" || phone == "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+            alert("Popup form submitted!");
+            return false; // stop real submit for this assignment
+        }
+
+        // Automatic slideshow
+        (function () {
+            var slides = document.querySelectorAll(".slide");
+            var current = 0;
+
+            function showNextSlide() {
+                slides[current].classList.remove("active");
+                current = (current + 1) % slides.length;
+                slides[current].classList.add("active");
+            }
+
+            // Change slide every 2.5 seconds
+            setInterval(showNextSlide, 2500);
+        })();
+    </script>
+</body>
+
+</html>
